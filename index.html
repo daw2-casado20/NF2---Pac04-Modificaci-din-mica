@@ -6,11 +6,43 @@
 td {vertical-align: top;}
   -->
   </style>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
  </head>
  <body>
-  <form action="N4P113formprocess.php" method="post">
-    Buscador: <input type="text" name="buscar"><br>
+  <form action="busquedaLetras.php" method="post">
+    Buscador: <input list="buscador" type="text" name="buscar" id="bsb"><br>
+    <datalist id="buscador">
+      <option value="Intern"></option>
+      <option value="Interne"></option>
+      <option value="Intern"></option>
+      <option value="Interne"></option>
+      <option value="Intern"></option>
+    </datalist>
     <input type="submit" value="Enviar">
   </form>
  </body>
 </html>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#bsb").keyup(function(){
+    alert($("#bsb").val());
+    letra = $("#bsb").val();
+    var parametros = {
+                "valorCaja1" : letra
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'busquedaLetras.php',
+                type:  'post',
+                
+        }).done(function(response) {
+          alert(response);
+        }).fail(function(data, textStatus, jqXHR){
+          alert("Fallo");
+        })
+  }); 
+});
+</script>
