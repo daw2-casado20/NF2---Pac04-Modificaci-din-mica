@@ -46,9 +46,14 @@ $(document).ready(function(){
                 data:  parametros,
                 url:   'busquedaLetras.php',
                 type:  'post',
+                dataType:"json",
                 
         }).done(function(response) {
-          alert(response);
+          $("#opt1").append(response.uno);
+          $("#opt2").append(response.dos);
+          $("#opt3").append(response.tres);
+          $("#opt4").append(response.cuatro);
+          $("#opt5").append(response.cinco);
         }).fail(function(data, textStatus, jqXHR){
           alert("Fallo");
         })
