@@ -9,7 +9,8 @@ require('class.pdofactory.php');
 $conexion = mysqli_connect('localhost', 'adri', 'root') or 
     die ('Unable to connect. Check your connection parameters.');
 mysqli_select_db($conexion, 'buscador') or die(mysqli_error($conexion));
-
+$current_timestamp0 = strtotime(date("Y-m-d H:i:s") . '- 10 second');
+$current_timestamp0 = date('Y-m-d H:i:s', $current_timestamp0);
 $letra = $_POST['valorCaja1'];
  
 $sql = "SELECT * FROM search WHERE paraula = '$letra'";
@@ -25,14 +26,17 @@ if (isset($ids)) {
 	while ($row =mysqli_fetch_assoc($result1)) {
 		$topBusquedas[] = $row['paraula'];
 	} 
-	echo $topBusquedas[0];
-	echo $topBusquedas[1];
-	echo $topBusquedas[2];
-	echo $topBusquedas[3];
-	echo $topBusquedas[4];
+	$response['uno'] = $topBusquedas[0];
+	$response['dos'] = $topBusquedas[1];
+	$response['tres'] = $topBusquedas[2];
+	$response['cuatro'] = $topBusquedas[3];
+	$response['cinco'] = $topBusquedas[4];
+	echo json_encode($response);
 	//$SectionArray = $topBusquedas[0], $topBusquedas[1], $topBusquedas[2], $topBusquedas[3], $topBusquedas[4];
 	$sql = "UPDATE search SET total = total + 1 WHERE id = '$ids'";
 	$result = mysqli_query($conexion, $sql) or die (mysqli_error($conexion));
+	$sql2 = "UPDATE search SET lastvisit = '$current_timestamp0' WHERE id = '$ids'";
+	$result2 = mysqli_query($conexion, $sql2) or die (mysqli_error($conexion));
 }else{
 	$current_timestamp = strtotime(date("Y-m-d H:i:s") . '- 10 second');
 	$current_timestamp = date('Y-m-d H:i:s', $current_timestamp);
@@ -86,5 +90,40 @@ $objUser->Save();
         $id = $objUser->getID();
         
         
-        unset($objUser);*/
+        unset($objUser);
+
+
+
+        <?php
+    if(conficion){
+        $data['message'] = "correcto";
+    }else{
+        $data['message'] = "error";
+    }
+
+    echo json_encode($data);
+
+?>
+
+Podrías evaluarlo en el cliente, mediante ajax, de esta manera:
+
+$.ajax({  
+    url:"archivo.php",  
+    method:"POST",  
+
+    data:
+    {
+        //================
+    },
+    dataType:"json",  
+    success:function(data)  
+    {  
+        if(data.message == "correcto"){
+            // Sentencias...
+        }
+        if(data.message == "error"){
+            // Sentencias...
+        }
+    }  
+});*/
 ?>
