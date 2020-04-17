@@ -28,6 +28,9 @@ if (isset($ids)) {
 	echo $topBusquedas[0];
 	echo $topBusquedas[1];
 	echo $topBusquedas[2];
+	echo $topBusquedas[3];
+	echo $topBusquedas[4];
+	//$SectionArray = $topBusquedas[0], $topBusquedas[1], $topBusquedas[2], $topBusquedas[3], $topBusquedas[4];
 	$sql = "UPDATE search SET total = total + 1 WHERE id = '$ids'";
 	$result = mysqli_query($conexion, $sql) or die (mysqli_error($conexion));
 }else{
@@ -85,4 +88,3 @@ $objUser->Save();
         
         unset($objUser);*/
 ?>
-
