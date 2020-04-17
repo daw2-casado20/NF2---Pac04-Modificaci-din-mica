@@ -4,6 +4,14 @@
   <style type="text/css">
   <!--
 td {vertical-align: top;}
+.divNoOculto{
+  border: 1px solid;
+  opacity: 1;
+}
+.divoculto{
+  border: 1px solid;
+  opacity: 0;
+}
   -->
   </style>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -12,16 +20,17 @@ td {vertical-align: top;}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
  </head>
  <body>
-  <form action="busquedaLetras.php" method="post">
+  <form action="#" method="post">
     Buscador: <input list="buscador" type="text" name="buscar" id="bsb"><br>
     <datalist id="buscador">
-      <option value="Intern"></option>
-      <option value="Interne"></option>
-      <option value="Intern"></option>
-      <option value="Interne"></option>
-      <option value="Intern"></option>
+      <option value="Intern" id="opt1"></option>
+      <option value="Interne" id="opt2"></option>
+      <option value="Intern" id="opt3"></option>
+      <option value="Interne" id="opt4"></option>
+      <option value="Intern" id="opt5"></option>
     </datalist>
-    <input type="submit" value="Enviar">
+    <input name="enviar" type="button" id="enviar" value="Enviar" />
+    <div id="tablas" class="divoculto">HIE</div>
   </form>
  </body>
 </html>
@@ -44,5 +53,24 @@ $(document).ready(function(){
           alert("Fallo");
         })
   }); 
+
+    $("#enviar").click(function(){
+      $("#tablas").removeClass("divoculto");
+      $("#tablas").addClass("divNoOculto");
+      var parametros = {
+                "valorCaja1" : letra
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'creationTables.php',
+                type:  'post',
+                
+        }).done(function(response) {
+          $("#tablas").html(response);
+        }).fail(function(data, textStatus, jqXHR){
+          alert("Fallo");
+        })
+  });
+
 });
 </script>
