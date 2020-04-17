@@ -6,7 +6,7 @@ class Search extends DataBoundObject {
         protected $lastvisit;
 
         protected function DefineTableName() {
-                return("login_details");
+                return("search");
         }
 
         protected function DefineRelationMap() {
